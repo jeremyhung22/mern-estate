@@ -1,10 +1,12 @@
 import { FaSearch } from "react-icons/fa"; //font awesome
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <header className="bg-slate-200 shadow-md">
-      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+      <div className="flex justify-between items-center max-w-screen-2xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
             <span className="text-slate-500">Jeremy</span>
@@ -31,10 +33,19 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link to="sign-in">
-            <li className="sm:inline text-slate-700 hover:underline">
-              Sign in
-            </li>
+          <Link to="profile">
+            {currentUser ? (
+              <img
+                src={currentUser.avatar}
+                alt="profile"
+                className="rounded-full h-7 w-7 object-cover"
+                referrerPolicy="no-referrer" // This is important for Google photos
+              />
+            ) : (
+              <li className="sm:inline text-slate-700 hover:underline">
+                Sign in
+              </li>
+            )}
           </Link>
         </ul>
       </div>
