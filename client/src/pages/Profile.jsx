@@ -14,6 +14,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
 } from "../redux/user/userSlice";
 
 import { useDispatch } from "react-redux";
@@ -99,6 +102,21 @@ export default function Profile() {
       dispatch(deleteUserFailure(error.message));
     }
   };
+
+  const handleSighOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess());
+    } catch (error) {
+      dispatch(signOutUserFailure(error));
+    }
+  };
   //firebase storage
   // allow read;
   // allow write: if
@@ -171,7 +189,9 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handleSighOut} className="text-red-700 cursor-pointer">
+          Sign out
+        </span>
       </div>
       <div className="text-green-700">
         {updateSuccess ? "User is Updated successfully" : ""}
