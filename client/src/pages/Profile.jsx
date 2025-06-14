@@ -251,7 +251,10 @@ export default function Profile() {
           </h1>
           {userListings.map((listing, idx) => {
             return (
-              <div key={idx} className="border rounded-lg p-3 flex justify-between items-center gap-4">
+              <div
+                key={idx}
+                className="border rounded-lg p-3 flex justify-between items-center gap-4"
+              >
                 <Link to={`/listing/${listing._id}`}>
                   <img
                     src={listing.imageUrls[0]}
@@ -272,9 +275,11 @@ export default function Profile() {
                   >
                     Delete
                   </button>
-                  <button className="flex flex-col item-center text-green-700 uppercase">
-                    Edit
-                  </button>
+                  <Link to={`/update-listing/${listing._id}`}>
+                    <button className="flex flex-col item-center text-green-700 uppercase">
+                      Edit
+                    </button>
+                  </Link>
                 </div>
               </div>
             );
