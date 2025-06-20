@@ -13,13 +13,16 @@ import {
   FaParking,
   FaShare,
 } from "react-icons/fa";
-
+import { useSelector } from "react-redux";
+import Contact from "../components/Contact";
 export default function Listing() {
   SwiperCore.use([Navigation]);
+  const { currentUser } = useSelector((state) => state.user);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function Listing() {
               Linked copied
             </p>
           )}
-          <div className="flex flex-col max-auto p-3 my-7 gap-4">
+          <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
             <p className="text-2xl font-semibold">
               {listing.name} - ${" "}
               {listing.offer
@@ -127,11 +130,20 @@ export default function Listing() {
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaChair />
-                {listing.furnished
-                  ? "furnished"
-                  : "unfurnished"}
+                {listing.furnished ? "furnished" : "unfurnished"}
               </li>
             </ul>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                onClick={() => {
+                  return setContact(true);
+                }}
+                className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
+              >
+                Contact Landlord
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}
