@@ -25,18 +25,18 @@ export default function Contact({ listing }) {
         <p>
           Contact <span className="font-semibold">{landlord.username}</span> for{" "}
           <span className="font-semibold">{listing.name.toLowerCase()}</span>
-          <textarea
-            className="w-full border rounded-lg p-3"
-            placeholder="enter your message"
-            name="message"
-            id="message"
-            rows="2"
-            value={message}
-            onChange={onChange}
-          ></textarea>
         </p>
+        <textarea
+          className="w-full border rounded-lg p-3"
+          placeholder="enter your message"
+          name="message"
+          id="message"
+          rows="2"
+          value={message}
+          onChange={onChange}
+        ></textarea>
         <Link
-          to={`mailto:${landlord.email}?subject=Regarging ${listing.name}&body=${message}`}
+          to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
           className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
         >
           Send Message
