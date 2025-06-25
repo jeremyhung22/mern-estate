@@ -44,7 +44,7 @@ export default function Header() {
             placeholder="Search..."
             className="bg-transparent focus:outline-none w-24 sm:w-64"
           />
-          <button onSubmit={handleSubmit}>
+          <button>
             <FaSearch className="text-slate-500" />
           </button>
         </form>
