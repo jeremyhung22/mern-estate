@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
+
 export default function Listing() {
   SwiperCore.use([Navigation]);
   const { currentUser } = useSelector((state) => state.user);
