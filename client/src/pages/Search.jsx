@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
@@ -14,8 +14,8 @@ export default function Search() {
     order: "desc",
   });
   const [loading, setLoading] = useState(false);
-  const [listings, setListing] = useState([]);
-  console.log(listings);
+  const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
   const handleChange = (e) => {
     if (
       e.target.id === "all" ||
@@ -95,14 +95,34 @@ export default function Search() {
 
     const fetchListing = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
-      setListing(data);
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+      setListings(data);
       setLoading(false);
     };
     fetchListing();
   }, [location.search]);
+
+  const onShowMoreClick = async () => {
+    const numberOfListing = listings.length;
+    const startIndex = numberOfListing;
+    const urlParams = new URLSearchParams(location.length);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
+  };
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -218,6 +238,14 @@ export default function Search() {
             listings.map((listing) => {
               return <ListingItem key={listing._id} listing={listing} />;
             })}
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className="text-green-700 hover:underline p-7 text-center w-full"
+            >
+              Show More
+            </button>
+          )}
         </div>
       </div>
     </div>
