@@ -19,20 +19,20 @@ mongoose
 
 const __dirname = path.resolve();
 
-const app = express("");
+const app = express();
+
 app.use(express.json());
 
 app.use(cookieParser());
-
-app.listen(3000, () => {
-  console.log("Sever is running on port 3000!");
-});
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 
+// Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/client/dist")));
+
+// Catch-all handler: send back React's index.html file for any non-API routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
@@ -45,4 +45,8 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000!");
 });

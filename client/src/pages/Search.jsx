@@ -1,9 +1,11 @@
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
+
 export default function Search() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [sideBarData, setSideBarData] = useState({
     searchTerm: "",
     type: "all",
@@ -16,6 +18,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
   const [showMore, setShowMore] = useState(false);
+
   const handleChange = (e) => {
     if (
       e.target.id === "all" ||
@@ -113,7 +116,7 @@ export default function Search() {
   const onShowMoreClick = async () => {
     const numberOfListing = listings.length;
     const startIndex = numberOfListing;
-    const urlParams = new URLSearchParams(location.length);
+    const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
     const res = await fetch(`/api/listing/get?${searchQuery}`);
