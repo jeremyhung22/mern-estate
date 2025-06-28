@@ -52,7 +52,7 @@ export default function Home() {
           <br /> place with ease
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Jeremy Estate is the best place to find your next place to live.
+          ConneX Realty is the best place to find your next place to live.
           <br />
           We have a side range of properties for you to choose from.
         </div>

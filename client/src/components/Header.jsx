@@ -25,11 +25,11 @@ export default function Header() {
   }, [location.search]);
   return (
     <header className="bg-slate-200 shadow-md">
-      <div className="flex justify-between items-center max-w-screen-2xl mx-auto p-3">
+      <div style={{ marginLeft: '5vw', marginRight: '5vw' }} className="flex justify-between items-center mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-            <span className="text-slate-500">Jeremy</span>
-            <span className="text-slate-700">Estate</span>
+            <span className="text-slate-500">ConneX</span>
+            <span className="text-slate-700">Realty</span>
           </h1>
         </Link>
 
