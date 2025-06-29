@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -45,6 +45,14 @@ export default function SignIn() {
       dispatch(signinFailure(error.message));
     }
   };
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => {
+        dispatch(signinFailure(null));
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [dispatch, loading]);
 
   return (
     <div className="p-3 max-w-lg mx-auto">
